@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/MatheApp/static/js/main.dc74eb7c.chunk.js",
-    "main.js.map": "/MatheApp/static/js/main.dc74eb7c.chunk.js.map",
+    "main.js": "/MatheApp/static/js/main.3657633f.chunk.js",
+    "main.js.map": "/MatheApp/static/js/main.3657633f.chunk.js.map",
     "runtime-main.js": "/MatheApp/static/js/runtime-main.e559bb00.js",
     "runtime-main.js.map": "/MatheApp/static/js/runtime-main.e559bb00.js.map",
     "static/js/2.9153bab5.chunk.js": "/MatheApp/static/js/2.9153bab5.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.e559bb00.js",
     "static/js/2.9153bab5.chunk.js",
-    "static/js/main.dc74eb7c.chunk.js"
+    "static/js/main.3657633f.chunk.js"
   ]
 }
