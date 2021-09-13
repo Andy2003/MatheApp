@@ -28,7 +28,11 @@ export type Result = {
     shortCut: boolean
 }
 
-type Props = Equation & { onResult: (result: Result) => void }
+type Props = Equation & {
+    showB: boolean;
+    showQuestionMark: boolean;
+    onResult: (result: Result) => void
+}
 
 const Calculation: FC<Props> = ({
                                     a,
@@ -37,6 +41,8 @@ const Calculation: FC<Props> = ({
                                     waitingTime,
                                     aDistribution,
                                     bDistribution,
+                                    showB,
+                                    showQuestionMark,
                                     onResult
                                 }) => {
     const classes = useStyles();
@@ -71,24 +77,25 @@ const Calculation: FC<Props> = ({
     }
     return <>
 
-        {progress > 0 && <><Grid item xs={12}>
-            <Grid container justifyContent="center">
-                <Paper>
-                    <Fields distribution={aDistribution} color={classes.a} />
-                </Paper>
-            </Grid>
-        </Grid>
-            <Grid container justifyContent="center">
-                {add ?
-                    <AddIcon color={"primary"} /> : <RemoveIcon color={"secondary"} />}
-            </Grid>
+        {progress > 0 && <>
             <Grid item xs={12}>
                 <Grid container justifyContent="center">
                     <Paper>
-                        <Fields distribution={bDistribution} color={classes.b} />
+                        <Fields distribution={aDistribution} color={classes.a} showQuestionMark={showQuestionMark} />
                     </Paper>
                 </Grid>
             </Grid>
+            {showB && <Grid container justifyContent="center">
+                {add ?
+                    <AddIcon color={"primary"} /> : <RemoveIcon color={"secondary"} />}
+            </Grid>}
+            {showB && <Grid item xs={12}>
+                <Grid container justifyContent="center">
+                    <Paper>
+                        <Fields distribution={bDistribution} color={classes.b} showQuestionMark={showQuestionMark} />
+                    </Paper>
+                </Grid>
+            </Grid>}
             <Grid item xs={12}>
                 <LinearProgress variant="determinate" value={progress} />
             </Grid>

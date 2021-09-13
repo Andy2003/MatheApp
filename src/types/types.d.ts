@@ -1,6 +1,7 @@
 export type Equation = {
     a: number;
     b: number;
+    showB: boolean;
     add: boolean;
     waitingTime: number;
     aDistribution: number[];
@@ -8,5 +9,4 @@ export type Equation = {
     id: number
 }
 
-export type Difficulty = 'FILL_FIRST' | 'FILL_EQUAL' | 'FILL_RANDOM';
 export type Operation = 'PLUS' | 'MINUS' | 'BOTH';

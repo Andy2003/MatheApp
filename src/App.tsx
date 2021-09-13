@@ -4,14 +4,14 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ExposureIcon from '@material-ui/icons/Exposure';
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import Calculation, {Result} from "./components/Calculation";
-import {Difficulty, Equation, Operation} from "./types/types";
+import {Equation, Operation} from "./types/types";
 import getEquation from "./utils/getEquation";
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     result: {
@@ -41,10 +41,20 @@ type Statistic = {
     shortCutCount: number
 }
 
+const difficultyLabels = {
+    0: "Zahlen zuordnen",
+    1: "Zahlen auffüllen 10",
+    2: "Zahlen auffüllen 20",
+    3: "Berechnung 5er Blöcke",
+    4: "Berechnung normal",
+    5: "Berechnung gleich verteilt",
+    6: "Berechnung zufällige Zuordnung",
+}
+
 function App() {
     const classes = useStyles();
 
-    const [difficulty, setDifficulty] = useState<Difficulty>("FILL_FIRST");
+    const [difficulty, setDifficulty] = useState<0 | 1 | 2 | 3 | 4 | 5 | 6>(0);
     const [operation, setOperation] = useState<Operation>("PLUS");
     const [equation, setEquation] = useState<Equation>(() => getEquation(difficulty, operation));
     const [result, setResult] = useState<Result | null>(null);
@@ -59,12 +69,19 @@ function App() {
         setResult(null);
     }
 
-    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: Difficulty) => {
+    const handleDifficulty = (event: React.ChangeEvent<{}>, newValue: number | number[]) => {
+        if (typeof newValue !== 'number') {
+            return;
+        }
         if (difficulty === newValue) {
             return
         }
+        if (newValue < 4 && operation !== "PLUS") {
+            setOperation("PLUS")
+        }
         setResult(null);
-        setDifficulty(newValue);
+        // @ts-ignore
+        setDifficulty(newValue)
     };
 
     const changeOperation = () => {
@@ -103,21 +120,32 @@ function App() {
     };
     return (<Container>
         <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
                 <Grid container justifyContent={"center"}>
-                    <Tabs value={difficulty} onChange={handleTabChange}>
-                        <Tab label="Leicht" value={"FILL_FIRST"} />
-                        <Tab label="Mittel" value={"FILL_EQUAL"} />
-                        <Tab label="Schwer" value={"FILL_RANDOM"} />
-                        <IconButton onClick={changeOperation}>
-                            {operation === "PLUS" && <AddBoxIcon />}
-                            {operation === "MINUS" && <IndeterminateCheckBoxIcon />}
-                            {operation === "BOTH" && <ExposureIcon />}
-                        </IconButton>
-                    </Tabs>
+
+                    <Typography>{difficultyLabels[difficulty]}</Typography>
+                    <Slider
+                        value={difficulty}
+                        onChange={handleDifficulty}
+                        valueLabelDisplay="off"
+                        step={1}
+                        marks
+                        min={0}
+                        max={6}
+                    />
                 </Grid>
             </Grid>
-            {result === null && <Calculation {...equation} key={equation.id} onResult={onResult} />}
+            <Grid item xs={2}>
+                <IconButton onClick={changeOperation} disabled={difficulty < 3}>
+                    {operation === "PLUS" && <AddBoxIcon />}
+                    {operation === "MINUS" && <IndeterminateCheckBoxIcon />}
+                    {operation === "BOTH" && <ExposureIcon />}
+                </IconButton>
+            </Grid>
+
+            {result === null &&
+            <Calculation {...equation} showQuestionMark={difficulty === 1 || difficulty === 2} key={equation.id}
+                         onResult={onResult} />}
             {result !== null &&
             <>
                 <Grid item xs={12}>
