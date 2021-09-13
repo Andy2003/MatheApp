@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/static/js/main.9643d9fc.chunk.js",
-    "main.js.map": "/static/js/main.9643d9fc.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.e6decd13.js",
-    "runtime-main.js.map": "/static/js/runtime-main.e6decd13.js.map",
-    "static/js/2.d59e4b71.chunk.js": "/static/js/2.d59e4b71.chunk.js",
-    "static/js/2.d59e4b71.chunk.js.map": "/static/js/2.d59e4b71.chunk.js.map",
-    "index.html": "/index.html",
-    "static/js/2.d59e4b71.chunk.js.LICENSE.txt": "/static/js/2.d59e4b71.chunk.js.LICENSE.txt"
+    "main.js": "/MatheApp/static/js/main.dc74eb7c.chunk.js",
+    "main.js.map": "/MatheApp/static/js/main.dc74eb7c.chunk.js.map",
+    "runtime-main.js": "/MatheApp/static/js/runtime-main.e559bb00.js",
+    "runtime-main.js.map": "/MatheApp/static/js/runtime-main.e559bb00.js.map",
+    "static/js/2.9153bab5.chunk.js": "/MatheApp/static/js/2.9153bab5.chunk.js",
+    "static/js/2.9153bab5.chunk.js.map": "/MatheApp/static/js/2.9153bab5.chunk.js.map",
+    "index.html": "/MatheApp/index.html",
+    "static/js/2.9153bab5.chunk.js.LICENSE.txt": "/MatheApp/static/js/2.9153bab5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.e6decd13.js",
-    "static/js/2.d59e4b71.chunk.js",
-    "static/js/main.9643d9fc.chunk.js"
+    "static/js/runtime-main.e559bb00.js",
+    "static/js/2.9153bab5.chunk.js",
+    "static/js/main.dc74eb7c.chunk.js"
   ]
 }
