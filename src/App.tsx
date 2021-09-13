@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {IconButton, makeStyles} from '@material-ui/core';
+import React, {useState} from 'react';
+import {ListItemIcon, makeStyles, Switch} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ExposureIcon from '@material-ui/icons/Exposure';
-import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import Calculation, {Result} from "./components/Calculation";
-import {Equation, Operation} from "./types/types";
+import {Equation} from "./types/types";
 import getEquation from "./utils/getEquation";
-import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
     result: {
@@ -29,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
     wrong: {
         backgroundColor: theme.palette.error.main,
         color: theme.palette.error.contrastText
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+    content: {
+        marginTop: theme.spacing(1)
     }
 }));
 
@@ -55,51 +66,33 @@ function App() {
     const classes = useStyles();
 
     const [difficulty, setDifficulty] = useState<0 | 1 | 2 | 3 | 4 | 5 | 6>(0);
-    const [operation, setOperation] = useState<Operation>("PLUS");
-    const [equation, setEquation] = useState<Equation>(() => getEquation(difficulty, operation));
+    const [plus, setPlus] = useState(true);
+    const [minus, setMinus] = useState(false);
+    const [equation, setEquation] = useState<Equation | null>(null);
     const [result, setResult] = useState<Result | null>(null);
     const [statistic, setStatistic] = useState<Statistic>({right: 0, wrong: 0, sumTime: 0, count: 0, shortCutCount: 0});
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const next = () => {
-        if (result?.ok) {
-            setEquation(getEquation(difficulty, operation))
-        } else {
-            setEquation((e) => ({...e, waitingTime: e.waitingTime + 1000}))
-        }
+        setEquation((e) => {
+            if (e === null || result?.ok) {
+                return getEquation(difficulty, plus, minus)
+            }
+            return ({...e, waitingTime: e.waitingTime + 1000});
+        })
         setResult(null);
     }
 
-    const handleDifficulty = (event: React.ChangeEvent<{}>, newValue: number | number[]) => {
-        if (typeof newValue !== 'number') {
-            return;
-        }
+    const handleDifficulty = (newValue: number) => {
         if (difficulty === newValue) {
             return
         }
-        if (newValue < 4 && operation !== "PLUS") {
-            setOperation("PLUS")
-        }
         setResult(null);
+        setEquation(null)
+        setStatistic({right: 0, wrong: 0, sumTime: 0, count: 0, shortCutCount: 0})
         // @ts-ignore
         setDifficulty(newValue)
     };
-
-    const changeOperation = () => {
-        setOperation(prevState => {
-            switch (prevState) {
-                case "PLUS":
-                    return "MINUS";
-                case "MINUS":
-                    return "BOTH";
-                case "BOTH":
-                    return "PLUS";
-            }
-        })
-    };
-
-    useEffect(() => {
-        setEquation(getEquation(difficulty, operation))
-    }, [difficulty, operation]);
 
     let onResult: (result: Result) => void = res => {
         setStatistic(prevState => {
@@ -118,38 +111,67 @@ function App() {
         })
         setResult(res)
     };
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (<Container>
-        <Grid container spacing={2}>
-            <Grid item xs={10}>
-                <Grid container justifyContent={"center"}>
-
-                    <Typography>{difficultyLabels[difficulty]}</Typography>
-                    <Slider
-                        value={difficulty}
-                        onChange={handleDifficulty}
-                        valueLabelDisplay="off"
-                        step={1}
-                        marks
-                        min={0}
-                        max={6}
-                    />
-                </Grid>
-            </Grid>
-            <Grid item xs={2}>
-                <IconButton onClick={changeOperation} disabled={difficulty < 3}>
-                    {operation === "PLUS" && <AddBoxIcon />}
-                    {operation === "MINUS" && <IndeterminateCheckBoxIcon />}
-                    {operation === "BOTH" && <ExposureIcon />}
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton edge="start" className={classes.menuButton} color="inherit" onClick={handleClick}>
+                    <MenuIcon />
                 </IconButton>
-            </Grid>
-
-            {result === null &&
+                <Typography variant="h6" className={classes.title}>
+                    {difficultyLabels[difficulty]}
+                </Typography>
+            </Toolbar>
+        </AppBar>
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+        >
+            {Object.entries(difficultyLabels).map(([key, text]) => (<MenuItem key={key} onClick={() => {
+                handleDifficulty(parseInt(key))
+                handleClose()
+            }} divider={key === '6'}>{text}</MenuItem>))}
+            <MenuItem disabled={difficulty < 3}>
+                <ListItemIcon>
+                    <Switch checked={plus} onChange={(event, checked) => setPlus(checked)} />
+                </ListItemIcon>
+                <Typography variant="inherit">Addition</Typography>
+            </MenuItem>
+            <MenuItem disabled={difficulty < 3}>
+                <ListItemIcon>
+                    <Switch checked={minus} onChange={(event, checked) => setMinus(checked)} />
+                </ListItemIcon>
+                <Typography variant="inherit">Subtraktion</Typography>
+            </MenuItem>
+        </Menu>
+        <Grid className={classes.content} container spacing={2}>
+            {equation == null && <Grid item xs={12}>
+                <Paper classes={{root: classes.result + ' ' + classes.right}} onClick={next}>
+                    {difficultyLabels[difficulty]}
+                    <div className={classes.resultText}>
+                        Start
+                    </div>
+                </Paper>
+            </Grid>}
+            {result === null && equation != null &&
             <Calculation {...equation} showQuestionMark={difficulty === 1 || difficulty === 2} key={equation.id}
                          onResult={onResult} />}
             {result !== null &&
             <>
                 <Grid item xs={12}>
-                    <Paper classes={{root: classes.result + ' ' + (result.ok ? classes.right : classes.wrong)}}>
+                    <Paper classes={{root: classes.result + ' ' + (result.ok ? classes.right : classes.wrong)}}
+                           onClick={next}>
                         Zeit: {result.time / 1000} Sekunden
                         <div className={classes.resultText}>
                             {result.ok ? 'Richtig' : 'Falsch'}

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     button: {
-        margin: theme.spacing(1)
+        // margin: theme.spacing(1)
     }
 }));
 
@@ -109,10 +109,12 @@ const Calculation: FC<Props> = ({
 
         {progress <= 0 && <>
             <Grid item xs={12}>
-                <Grid container justifyContent="center">
+                <Grid container spacing={3}>
                     {Array.from({length: 21}, (_, n) => (
-                        <Button key={n} className={classes.button} variant="outlined"
-                                onClick={() => setValue(n)}>{n}</Button>))}
+                        <Grid item xs={3} sm={2} md={1}>
+                            <Button key={n} variant="outlined"
+                                    onClick={() => setValue(n)}>{n}</Button>
+                        </Grid>))}
                 </Grid>
             </Grid>
             <Grid item xs={12}>

@@ -8,5 +8,3 @@ export type Equation = {
     bDistribution: number[];
     id: number
 }
-
-export type Operation = 'PLUS' | 'MINUS' | 'BOTH';

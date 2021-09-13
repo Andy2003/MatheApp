@@ -1,4 +1,4 @@
-import {Equation, Operation} from "../types/types";
+import {Equation} from "../types/types";
 
 const getDistribution = (difficulty: number, value: number) => {
     let row1 = 0;
@@ -28,19 +28,12 @@ const getDistribution = (difficulty: number, value: number) => {
 
 let idCount = 0
 
-const getEquation = (difficulty: number, op: Operation): Equation => {
+const getEquation = (difficulty: number, plus: boolean, minus: boolean): Equation => {
     let add;
-    switch (op) {
-        case "PLUS":
-            add = true
-            break;
-        case "MINUS":
-            add = false
-            break;
-        case "BOTH":
-            add = Math.random() > 0.5
-            break;
-
+    if (plus && minus) {
+        add = Math.random() > 0.5
+    } else {
+        add = !minus;
     }
     const showB = difficulty >= 3
     if (difficulty < 3) {
@@ -67,6 +60,9 @@ const getEquation = (difficulty: number, op: Operation): Equation => {
                     a--
                     b++
                 }
+                while (Math.random() > 0.5 && b + a < 20) {
+                    b = b + 5
+                }
                 break;
             default:
                 b = Math.round(Math.random() * (19 - a) + 1)
@@ -76,6 +72,9 @@ const getEquation = (difficulty: number, op: Operation): Equation => {
         a = Math.round(Math.random() * 19 + 1)
         if (difficulty === 3) {
             b = a % 5
+            while (Math.random() > 0.5 && b < a) {
+                b = b + 5
+            }
         } else {
             b = Math.round(Math.random() * a)
         }
