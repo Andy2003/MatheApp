@@ -142,15 +142,25 @@ function App() {
                 handleDifficulty(parseInt(key))
                 handleClose()
             }} divider={key === '6'}>{text}</MenuItem>))}
-            <MenuItem disabled={difficulty < 3}>
+            <MenuItem>
                 <ListItemIcon>
-                    <Switch checked={plus} onChange={(event, checked) => setPlus(checked)} />
+                    <Switch checked={plus} onChange={(event, checked) => {
+                        if (!minus && !checked) {
+                            setMinus(true)
+                        }
+                        setPlus(checked)
+                    }} />
                 </ListItemIcon>
                 <Typography variant="inherit">Addition</Typography>
             </MenuItem>
-            <MenuItem disabled={difficulty < 3}>
+            <MenuItem>
                 <ListItemIcon>
-                    <Switch checked={minus} onChange={(event, checked) => setMinus(checked)} />
+                    <Switch checked={minus} onChange={(event, checked) => {
+                        if (!plus && !checked) {
+                            setPlus(true)
+                        }
+                        setMinus(checked)
+                    }} />
                 </ListItemIcon>
                 <Typography variant="inherit">Subtraktion</Typography>
             </MenuItem>
@@ -193,7 +203,8 @@ function App() {
 
             </>}
         </Grid>
-    </Container>);
+    </Container>)
+        ;
 }
 
 export default App;
