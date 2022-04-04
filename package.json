@@ -4,7 +4,7 @@
 	"private": true,
 	"homepage": "https://www.berger-freelancer.com/MatheApp/",
 	"dependencies": {
-		"@material-ui/core": "^4.12.3",
+		"@material-ui/core": "^4.12.4",
 		"@material-ui/icons": "^4.11.2",
 		"@types/react": "^17.0.37",
 		"@types/react-dom": "^17.0.11",
