@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/MatheApp/static/css/main.e6c13ad2.css",
-    "main.js": "/MatheApp/static/js/main.f4ed5a12.js",
+    "main.js": "/MatheApp/static/js/main.9bc6da62.js",
     "index.html": "/MatheApp/index.html",
     "main.e6c13ad2.css.map": "/MatheApp/static/css/main.e6c13ad2.css.map",
-    "main.f4ed5a12.js.map": "/MatheApp/static/js/main.f4ed5a12.js.map"
+    "main.9bc6da62.js.map": "/MatheApp/static/js/main.9bc6da62.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.f4ed5a12.js"
+    "static/js/main.9bc6da62.js"
   ]
 }
