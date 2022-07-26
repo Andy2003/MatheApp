@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/MatheApp/static/css/main.875059cf.chunk.css",
-    "main.js": "/MatheApp/static/js/main.7e8de2b6.chunk.js",
-    "main.js.map": "/MatheApp/static/js/main.7e8de2b6.chunk.js.map",
-    "runtime-main.js": "/MatheApp/static/js/runtime-main.e559bb00.js",
-    "runtime-main.js.map": "/MatheApp/static/js/runtime-main.e559bb00.js.map",
-    "static/js/2.fef86db7.chunk.js": "/MatheApp/static/js/2.fef86db7.chunk.js",
-    "static/js/2.fef86db7.chunk.js.map": "/MatheApp/static/js/2.fef86db7.chunk.js.map",
+    "main.css": "/MatheApp/static/css/main.e6c13ad2.css",
+    "main.js": "/MatheApp/static/js/main.f4ed5a12.js",
     "index.html": "/MatheApp/index.html",
-    "static/css/main.875059cf.chunk.css.map": "/MatheApp/static/css/main.875059cf.chunk.css.map",
-    "static/js/2.fef86db7.chunk.js.LICENSE.txt": "/MatheApp/static/js/2.fef86db7.chunk.js.LICENSE.txt"
+    "main.e6c13ad2.css.map": "/MatheApp/static/css/main.e6c13ad2.css.map",
+    "main.f4ed5a12.js.map": "/MatheApp/static/js/main.f4ed5a12.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.e559bb00.js",
-    "static/js/2.fef86db7.chunk.js",
-    "static/css/main.875059cf.chunk.css",
-    "static/js/main.7e8de2b6.chunk.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.f4ed5a12.js"
   ]
 }
